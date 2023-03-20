@@ -6,9 +6,6 @@ pipeline {
         echo 'I am building your code..!'
         sh '''#!/bin/bash
 echo $PWD
-cd $PWD
-cd ../
-echo $PWD
 mvn clean install'''
       }
     }
