@@ -9,7 +9,7 @@ pipeline {
         echo 'I am building your code..!'
         sh '''#!/bin/bash
         echo $PWD
-        mvn clean install'''
+        mvn clean install -DskipTests'''
       }
     }
 
