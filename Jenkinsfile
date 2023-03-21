@@ -23,12 +23,14 @@ pipeline {
 
         stage('Publisher 1') {
           steps {
+            input 'Do you approve pub1 deployment?'
             echo 'I am deploying to pub1.'
           }
         }
 
         stage('Publisher2') {
           steps {
+            input 'Do you approve pub 2deployment?'
             echo 'I am deploying to pub2.'
           }
         }
