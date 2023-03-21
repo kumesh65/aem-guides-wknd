@@ -11,45 +11,32 @@ pipeline {
     }
 
     stage('Author') {
-      parallel {
-        stage('Author') {
-          steps {
-            echo 'I start to deployment to author.'
-          }
-        }
-
-        stage('Publisher 1') {
-          steps {
-            input(message: 'Do you approve pub1 deployment?', id: 'pub-01-id-cnfrm', ok: 'Confirm')
-            echo 'I am deploying to pub1.'
-          }
-        }
-
-        stage('Publisher2') {
-          steps {
-            input(message: 'Do you approve pub 2deployment?', id: 'pub-02-id-cnfrm', ok: 'Confirm')
-            echo 'I am deploying to pub2.'
-          }
-        }
-
+      steps {
+        echo 'I start to deployment to author.'
       }
     }
 
-    stage('Dispatcher Cache Flush') {
+    stage('Publisher 1') {
       steps {
-        echo 'I am clearing cache from dispatcher one.'
+        input(message: 'Do you want to deploy to publisher one?', id: 'id-pub1-confirm-message.', ok: 'Confirm')
       }
     }
 
-    stage('Inform') {
+    stage('Publisher 2') {
       steps {
-        echo 'Will innform the QA team for sanity.'
+        input(message: 'Do you want to deploy to publisher2?', id: 'id-pub2-confirm-message.', ok: 'Confirm')
+      }
+    }
+
+    stage('Dispatcher Cache flush') {
+      steps {
+        echo 'We are about the flush the dispatcher cache.'
       }
     }
 
     stage('End') {
       steps {
-        echo 'I am done...!'
+        echo 'Your code deployed successfully.'
       }
     }
 
