@@ -8,7 +8,6 @@ pipeline {
     stage('Build') {
       steps {
         echo 'I am building your code..!'
-        env.JAVA_HOME = "${jdk}"
         sh '''#!/bin/bash
         echo $PWD
         mvn clean install'''
