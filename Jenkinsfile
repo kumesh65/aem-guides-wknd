@@ -1,8 +1,5 @@
 pipeline {
   agent any
-  tools { 
-        maven 'maven-383' 
-    }
   stages {
     stage('Build') {
       steps {
@@ -23,14 +20,14 @@ pipeline {
 
         stage('Publisher 1') {
           steps {
-            input 'Do you approve pub1 deployment?'
+            input(message: 'Do you approve pub1 deployment?', id: 'pub-01-id-cnfrm', ok: 'Confirm')
             echo 'I am deploying to pub1.'
           }
         }
 
         stage('Publisher2') {
           steps {
-            input 'Do you approve pub 2deployment?'
+            input(message: 'Do you approve pub 2deployment?', id: 'pub-02-id-cnfrm', ok: 'Confirm')
             echo 'I am deploying to pub2.'
           }
         }
@@ -56,5 +53,8 @@ pipeline {
       }
     }
 
+  }
+  tools {
+    maven 'maven-383'
   }
 }
