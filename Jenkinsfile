@@ -16,6 +16,22 @@ pipeline {
           steps {
             echo 'I start to deployment to author.'
             input(message: 'Author deployment', id: 'auth-dep', ok: 'Yes')
+            sh '''#!/bin/bash
+projectModules=("ui.apps" "all" "ui.content")
+for module in ${projectModules[@]}; do
+  echo "moduels are $module"
+  if [ -d "$module" ]
+    then
+      ZIP_PATTERN="$module/target/*.zip"
+      ZIP_PACKAGES=( $ZIP_PATTERN )
+      FILE="${ZIP_PACKAGES[0]}"
+      echo "pass: The module folder: $FILE exist"
+      curl --fail -u "admin":"Juniper@1234!" -F file=@$FILE -F name=$FILE  -F force=true -F install=true -F strict=true http://localhost:4502/crx/packmgr/service.jsp
+      echo "$module deployed on author"
+    else
+      echo "ERROR: The module folder: ui.apps does not exist}"
+    fi
+done'''
           }
         }
 
