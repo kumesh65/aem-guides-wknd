@@ -26,7 +26,7 @@ for module in ${projectModules[@]}; do
       ZIP_PACKAGES=( $ZIP_PATTERN )
       FILE="${ZIP_PACKAGES[0]}"
       echo "pass: The module folder: $FILE exist"
-      curl --fail -u "admin":"Juniper@1234!" -F file=@$FILE -F name=$FILE  -F force=true -F install=true -F strict=true http://localhost:4502/crx/packmgr/service.jsp
+      curl --fail -u "admin":"admin" -F file=@$FILE -F name=$FILE  -F force=true -F install=true -F strict=true http://localhost:4502/crx/packmgr/service.jsp
       echo "$module deployed on author"
     else
       echo "ERROR: The module folder: ui.apps does not exist}"
