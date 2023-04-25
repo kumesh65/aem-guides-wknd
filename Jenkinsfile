@@ -65,6 +65,11 @@ done'''
     stage('Dispatcher Cache flush') {
       steps {
         echo 'We are about the flush the dispatcher cache.'
+        sh '''#!/bin/bash
+curl -H "CQ-Action: Flush" -H "CQ-Handle: /content/juniper" -H "CQ-Path:/content/juniper" \\
+-H "Content-Length: 0" -H "Content-Type: application/octet-stream" \\
+http://dispatcher-server-hostname:port/dispatcher/invalidate.cache
+done'''
       }
     }
 
