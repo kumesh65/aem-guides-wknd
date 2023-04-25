@@ -11,20 +11,38 @@ pipeline {
     }
 
     stage('Author') {
-      steps {
-        echo 'I start to deployment to author.'
-      }
-    }
+      parallel {
+        stage('Author') {
+          steps {
+            echo 'I start to deployment to author.'
+            input(message: 'Author deployment', id: 'auth-dep', ok: 'Yes')
+          }
+        }
 
-    stage('Publisher 1') {
-      steps {
-        input(message: 'Do you want to deploy to publisher one?', id: 'id-pub1-confirm-message.', ok: 'Confirm')
-      }
-    }
+        stage('Publisher 1') {
+          steps {
+            input(message: 'Please approve Pub one deployment', id: 'pub-01-dep', ok: 'Yes')
+          }
+        }
 
-    stage('Publisher 2') {
-      steps {
-        input(message: 'Do you want to deploy to publisher2?', id: 'id-pub2-confirm-message.', ok: 'Confirm')
+        stage('Publisher 2') {
+          steps {
+            input(message: 'Please approve pub2 deployment', id: 'pub-02-dep', ok: 'Yes')
+          }
+        }
+
+        stage('Publisher 3') {
+          steps {
+            input(message: 'Please approve pub 03 deployment', id: 'pub-03-dep', ok: 'Yes')
+          }
+        }
+
+        stage('Publisher 4') {
+          steps {
+            input(message: 'Please approve pub 04 deployment', id: 'pub-04-dep', ok: 'Yes')
+          }
+        }
+
       }
     }
 
@@ -34,9 +52,15 @@ pipeline {
       }
     }
 
+    stage('Notify QA') {
+      steps {
+        echo 'Production deployment done please do smoke testing'
+      }
+    }
+
     stage('End') {
       steps {
-        echo 'Your code deployed successfully.'
+        echo 'Release completed..!'
       }
     }
 
