@@ -10,11 +10,11 @@ pipeline {
             steps {
                 script {
                     Exception caughtException = null
-
+                     def userInput = iinput 'Do you approve pub1 deployment?'
+                     echo "value is, $userInput"
                     catchError(buildResult: 'SUCCESS', stageResult: 'ABORTED') { 
                         try { 
                             echo "Started stage A"
-                            sleep(time: 5, unit: "SECONDS")
                         } catch (org.jenkinsci.plugins.workflow.steps.FlowInterruptedException e) {
                             error "Caught ${e.toString()}" 
                         } catch (Throwable e) {
