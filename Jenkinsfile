@@ -27,10 +27,10 @@ pipeline {
                                 // Your Step 1 code here
 
                                 if (restartStep) {
-                                    error('Step 1 was restarted')
+                                    error('Author was restarted')
                                 }
                             } catch (Exception e) {
-                                error("Step 1 failed: ${e.message}")
+                                error("Author failed: ${e.message}")
                             }
                         }
                     }
@@ -53,10 +53,10 @@ pipeline {
                                 // Your Step 2 code here
 
                                 if (restartStep) {
-                                    error('Step 2 was restarted')
+                                    error('Publish 1 was restarted')
                                 }
                             } catch (Exception e) {
-                                error("Step 2 failed: ${e.message}")
+                                error("Publish 1 failed: ${e.message}")
                             }
                         }
                     }
@@ -72,16 +72,16 @@ pipeline {
 
                                 if (env.RESTART_STEP == 'Yes') {
                                     restartStep = true
-                                    echo 'Restarting Step 2...'
+                                    echo 'Restarting Publish 2...'
                                 }
 
                                 // Your Step 2 code here
 
                                 if (restartStep) {
-                                    error('Step 2 was restarted')
+                                    error('Publish 2 was restarted')
                                 }
                             } catch (Exception e) {
-                                error("Step 2 failed: ${e.message}")
+                                error("Publish 2 failed: ${e.message}")
                             }
                         }
                     }
