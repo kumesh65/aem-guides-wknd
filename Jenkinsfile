@@ -1,60 +1,82 @@
 pipeline {
-  agent any
-  tools { 
-        maven 'maven-383' 
-    }
-  stages {
-    stage('Build') {
-      steps {
-        echo 'I am building your code..!'
-        sh '''#!/bin/bash
-        echo $PWD
-        mvn clean install -DskipTests'''
-      }
-    }
+    agent any
 
-    stage('Author') {
-      parallel {
-        stage('Author') {
-          steps {
-            echo 'I start to deployment to author.'
-          }
+    stages {
+        stage('Build') {
+            steps {
+                // Build your code here
+            }
         }
 
-        stage('Publisher 1') {
-          steps {
-            input 'Do you approve pub1 deployment?'
-            echo 'I am deploying to pub1.'
-          }
+        stage('Parallel Steps') {
+            parallel {
+                stage('Step 1') {
+                    steps {
+                        script {
+                            try {
+                                def restartStep = false
+
+                                // Step 1 logic
+                                input message: 'Proceed with Step 1? (Click "Proceed" to continue or "Abort" to restart)', ok: 'Proceed'
+
+                                if (env.RESTART_STEP == 'Yes') {
+                                    restartStep = true
+                                    echo 'Restarting Step 1...'
+                                }
+
+                                // Your Step 1 code here
+
+                                if (restartStep) {
+                                    error('Step 1 was restarted')
+                                }
+                            } catch (Exception e) {
+                                error("Step 1 failed: ${e.message}")
+                            }
+                        }
+                    }
+                }
+
+                stage('Step 2') {
+                    steps {
+                        script {
+                            try {
+                                def restartStep = false
+
+                                // Step 2 logic
+                                input message: 'Proceed with Step 2? (Click "Proceed" to continue or "Abort" to restart)', ok: 'Proceed'
+
+                                if (env.RESTART_STEP == 'Yes') {
+                                    restartStep = true
+                                    echo 'Restarting Step 2...'
+                                }
+
+                                // Your Step 2 code here
+
+                                if (restartStep) {
+                                    error('Step 2 was restarted')
+                                }
+                            } catch (Exception e) {
+                                error("Step 2 failed: ${e.message}")
+                            }
+                        }
+                    }
+                }
+
+                // Include similar logic for other parallel steps (Step 3, Step 4, etc.)
+            }
         }
 
-        stage('Publisher2') {
-          steps {
-            input 'Do you approve pub 2deployment?'
-            echo 'I am deploying to pub2.'
-          }
+        // Add more stages as needed
+    }
+
+    // Add post actions or notifications as needed
+    post {
+        success {
+            echo 'Pipeline completed successfully!'
         }
 
-      }
+        failure {
+            echo 'Pipeline failed!'
+        }
     }
-
-    stage('Dispatcher Cache Flush') {
-      steps {
-        echo 'I am clearing cache from dispatcher one.'
-      }
-    }
-
-    stage('Inform') {
-      steps {
-        echo 'Will innform the QA team for sanity.'
-      }
-    }
-
-    stage('End') {
-      steps {
-        echo 'I am done...!'
-      }
-    }
-
-  }
 }
