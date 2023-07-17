@@ -10,7 +10,7 @@ pipeline {
             steps {
                 script {
                     Exception caughtException = null
-                     def userInput = iinput 'Do you approve pub1 deployment?'
+                     def userInput = input 'Do you approve pub1 deployment?'
                      echo "value is, $userInput"
                     catchError(buildResult: 'SUCCESS', stageResult: 'ABORTED') { 
                         try { 
