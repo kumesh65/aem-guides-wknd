@@ -1,18 +1,6 @@
 pipeline {
   agent any
   stages {
-    stage('Build') {
-      steps {
-        echo 'I am building your code..!'
-        sh '''#!/bin/bash
-        echo $PWD
-        mvn clean install'''
-        archiveArtifacts artifacts: 'ui.apps.structure/target/*.zip, ui.content/target/*.zip, all/target/juniper.all-2.10.0-SNAPSHOT.zip',
-            fingerprint: true,
-            onlyIfSuccessful: true
-      }
-    }
-
     stage('Author') {
       parallel {
         stage('Author') {
