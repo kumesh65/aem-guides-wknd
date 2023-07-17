@@ -4,7 +4,7 @@ pipeline {
     stages {
         stage('Build') {
             steps {
-                // Build your code here
+                echo 'I am building your code..!'
             }
         }
 
